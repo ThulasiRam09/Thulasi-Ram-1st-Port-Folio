@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nainaru ThulasiRam - Java Developer Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header-content p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .contact-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+            background: var(--bg-white);
+            border-bottom: 2px solid var(--border-color);
+            overflow-x: auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-tabs button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-tabs button:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-tabs button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: var(--primary-light);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px);
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-badge {
+            background: var(--bg-light);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--primary-light);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Certifications Section */
+        .cert-item {
+            background: var(--bg-white);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .cert-item:hover {
+            box-shadow: var(--shadow-md);
+            border-left-color: var(--secondary-color);
+        }
+
+        .cert-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .cert-issuer {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Education Section */
+        .education-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .education-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .education-card .school {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .duration {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .education-details {
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .contact-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs button {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav-tabs,
+            footer {
+                display: none;
+            }
+
+            .card,
+            .project-card {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Nainaru ThulasiRam</h1>
+                <p>☕ Aspiring Java Developer | DSA Enthusiast | Backend Development Focused</p>
+                <div class="contact-links">
+                    <a href="mailto:nainaruthulasiram@gmail.com">
+                        <i class="fas fa-envelope"></i> nainaruthulasiram@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/nainaruthulasiram-4a7926293" target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/ThulasiRam09" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i> Tirupati, Andhra Pradesh, India
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="container" style="display: flex; width: 100%; gap: 0;">
+            <button class="nav-btn active" onclick="switchTab('about')">About</button>
+            <button class="nav-btn" onclick="switchTab('projects')">Projects</button>
+            <button class="nav-btn" onclick="switchTab('skills')">Skills</button>
+            <button class="nav-btn" onclick="switchTab('certifications')">Certifications</button>
+            <button class="nav-btn" onclick="switchTab('education')">Education</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- About Section -->
+            <div id="about" class="tab-content active">
+                <h2 class="section-title">About Me</h2>
+                <div class="card">
+                    <p class="about-text">
+                        I am a motivated computer science student with a strong interest in learning new skills and building a successful career in backend development. Currently pursuing my B.Tech in Computer Science and Engineering from Sri Venkateswara College of Engineering, Tirupati.
+                    </p>
+                    <p class="about-text">
+                        I am particularly focused on improving my knowledge in data structures and algorithms with Java. I enjoy exploring new opportunities, working on projects, and continuously developing myself. I am eager to apply my skills in real-world situations, grow both personally and professionally, and am open to internships and entry-level roles in backend development.
+                    </p>
+                    <p class="about-text">
+                        <strong>Key Interests:</strong> Backend Development, Data Structures & Algorithms, Database Management (JDBC), Cloud Technologies, and System Design.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div id="projects" class="tab-content">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <!-- Project 1: Bank Management System -->
+                    <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Bank Management System</h3>
+                        <p>A comprehensive console-based banking application with JDBC integration for persistent data storage. Handles account creation, transactions, fund transfers, and balance inquiries with database connectivity.</p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Java</span>
+                            <span class="tech-badge">JDBC</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">OOP</span>
+                        </div>
+                        <a href="https://github.com/ThulasiRam09/BankManagementSystem-With-JDBC" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Repository
+                        </a>
+                    </div>
+
+                    <!-- Project 2: TalentCheck Dashboard -->
+                    <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>AI Talent Check Dashboard</h3>
+                        <p>An intelligent talent evaluation dashboard leveraging AI for skill assessment and performance analytics. Provides insights into candidate capabilities and recommendations for development areas.</p>
+                        <div class="project-tech">
+                            <span class="tech-badge">AI/ML</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Analytics</span>
+                            <span class="tech-badge">Dashboard</span>
+                        </div>
+                        <a href="https://github.com/ThulasiRam09/TalentCheck-Dashboard" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Repository
+                        </a>
+                    </div>
+
+                    <!-- Project 3: HDI Predictor -->
+                    <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Human Development Index Predictor</h3>
+                        <p>A machine learning model that predicts human development indices based on socioeconomic indicators. Utilizes data analysis and predictive algorithms to forecast development metrics.</p>
+                        <div class="project-tech">
+                            <span class="tech-badge">ML</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Data Analysis</span>
+                            <span class="tech-badge">Pandas</span>
+                        </div>
+                        <a href="https://github.com/ThulasiRam09/Human-Development-Index-Predictor-" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> View Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div id="skills" class="tab-content">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-grid">
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-code"></i> Programming Languages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Core Java</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-database"></i> Database & Backend</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JDBC</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">Data Structures</span>
+                            <span class="skill-tag">OOP</span>
+                        </div>
+                    </div>
+
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-network-wired"></i> Core Competencies</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">DSA with Java</span>
+                            <span class="skill-tag">Computer Networking</span>
+                            <span class="skill-tag">Backend Development</span>
+                            <span class="skill-tag">Problem Solving</span>
+                        </div>
+                    </div>
+
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">AWS CloudOps</span>
+                            <span class="skill-tag">Google Cloud</span>
+                            <span class="skill-tag">Vertex AI</span>
+                            <span class="skill-tag">Backup & Restore</span>
+                        </div>
+                    </div>
+
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-tools"></i> Tools & Technologies</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git/GitHub</span>
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">IntelliJ IDEA</span>
+                            <span class="skill-tag">Prompt Engineering</span>
+                        </div>
+                    </div>
+
+                    <div class="card skill-category">
+                        <h3><i class="fas fa-brain"></i> Soft Skills</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Problem Solving</span>
+                            <span class="skill-tag">Communication</span>
+                            <span class="skill-tag">Team Collaboration</span>
+                            <span class="skill-tag">Learning Agility</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications Section -->
+            <div id="certifications" class="tab-content">
+                <h2 class="section-title">Certifications</h2>
+                
+                <div class="cert-item">
+                    <h3><i class="fas fa-certificate"></i> CCNA: Introduction to Networks</h3>
+                    <p class="cert-issuer">Cisco Networking Academy</p>
+                </div>
+
+                <div class="cert-item">
+                    <h3><i class="fas fa-certificate"></i> Prompt Design in Vertex AI Skill Badge</h3>
+                    <p class="cert-issuer">Google Cloud</p>
+                </div>
+
+                <div class="cert-item">
+                    <h3><i class="fas fa-certificate"></i> AWS CloudOps Associate: Backup & Restore Operations</h3>
+                    <p class="cert-issuer">Amazon Web Services</p>
+                </div>
+
+                <div class="cert-item">
+                    <h3><i class="fas fa-certificate"></i> Collaborative System Design</h3>
+                    <p class="cert-issuer">Professional Development Program</p>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div id="education" class="tab-content">
+                <h2 class="section-title">Education</h2>
+                <div class="education-card">
+                    <h3>Bachelor of Technology (B.Tech)</h3>
+                    <div class="school">Sri Venkateswara College of Engineering, Tirupati</div>
+                    <div class="school">Computer Science and Engineering</div>
+                    <div class="duration">
+                        <i class="fas fa-calendar"></i> September 2023 – April 2027
+                    </div>
+                    <div class="education-details">
+                        <p>Currently focused on strengthening data structures and algorithms with Java, cloud technologies, and backend development practices. Actively engaging with real-world projects and building a strong foundation for a career in software development.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">
+                <i class="fas fa-briefcase"></i> Open to internships and entry-level opportunities in backend development
+            </p>
+            <p class="footer-text" style="margin-top: 1rem; opacity: 0.7;">
+                © 2024 Nainaru ThulasiRam. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
